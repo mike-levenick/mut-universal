@@ -2,7 +2,6 @@ import SwiftUI
 
 struct RootView: View {
     @Environment(AppViewModel.self) private var appViewModel
-    @Environment(LogStore.self) private var logStore
     @State private var showLogViewer = false
 
     var body: some View {

@@ -235,16 +235,24 @@ struct LogViewerView: View {
         )
     }
 
-    private func formatTime(_ date: Date) -> String {
+    private static let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss.SSS"
-        return formatter.string(from: date)
+        return formatter
+    }()
+
+    private static let filenameFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd-HHmmss"
+        return formatter
+    }()
+
+    private func formatTime(_ date: Date) -> String {
+        Self.timeFormatter.string(from: date)
     }
 
     private func exportFilename() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd-HHmmss"
-        return "MUT-Logs-\(formatter.string(from: Date.now)).txt"
+        "MUT-Logs-\(Self.filenameFormatter.string(from: Date.now)).txt"
     }
 }
 

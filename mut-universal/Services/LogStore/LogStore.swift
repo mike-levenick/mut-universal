@@ -25,7 +25,7 @@ final class LogStore {
         lines.append("===")
         lines.append("")
 
-        for entry in entries {
+        for entry in buffer.snapshot() {
             let ts = formatter.string(from: entry.timestamp)
             let level = entry.level.displayName.uppercased()
             lines.append("[\(ts)] [\(level)] [\(entry.category.rawValue)] \(entry.message)")
