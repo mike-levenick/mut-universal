@@ -4,7 +4,7 @@ import OSLog
 /// Orchestrates batch update operations with concurrency limiting and progress tracking.
 actor UpdateEngine {
     private let apiClient: any JamfProAPIClientProtocol
-    private let maxConcurrency = 5
+    private let maxConcurrency = 1
 
     init(apiClient: any JamfProAPIClientProtocol) {
         self.apiClient = apiClient
