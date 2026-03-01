@@ -181,3 +181,11 @@ This project uses Claude Code agent teams for parallel development. When spawnin
 - Commit messages: imperative mood, concise (e.g., "Add CSV parser with validation")
 - Branch names: `feature/description`, `fix/description`, `refactor/description`
 - Keep commits focused — one logical change per commit
+
+## PR Workflow
+
+Before merging any PR:
+1. Use the **pr-writer** agent to draft the PR title and description
+2. Use the **code-reviewer** agent to review the full diff against `main`
+3. Address any critical or worth-flagging issues from the review
+4. Reviews are done locally in the console — no need for CI-based review
