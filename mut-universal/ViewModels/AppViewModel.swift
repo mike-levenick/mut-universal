@@ -6,8 +6,12 @@ final class AppViewModel {
     var currentScreen: AppScreen = .login
     var isAuthenticated = false
 
-    /// The API client, injected at app launch.
     var apiClient: (any JamfProAPIClientProtocol)?
+
+    var csvData: CSVData?
+    var selectedDeviceType: DeviceType = .macOS
+    var columnMapping: [Int: UpdatableField] = [:]
+    var updateOperations: [UpdateOperation] = []
 
     func navigateTo(_ screen: AppScreen) {
         currentScreen = screen
@@ -16,6 +20,16 @@ final class AppViewModel {
     func logout() async {
         try? await apiClient?.invalidateToken()
         isAuthenticated = false
+        csvData = nil
+        columnMapping = [:]
+        updateOperations = []
         currentScreen = .login
+    }
+
+    func startOver() {
+        csvData = nil
+        columnMapping = [:]
+        updateOperations = []
+        currentScreen = .csvImport
     }
 }
