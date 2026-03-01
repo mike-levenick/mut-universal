@@ -20,7 +20,7 @@ actor TokenManager {
             throw MUTError.missingCredentials
         }
 
-        let tokenURL = serverURL.appendingPathComponent("api/oauth/token")
+        let tokenURL = serverURL.appendingPathComponent("api/v1/oauth/token")
         var request = URLRequest(url: tokenURL)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
