@@ -39,8 +39,14 @@ final class LoginViewModel {
             Logger.auth.info("Authentication successful for \(url.absoluteString)")
 
             if rememberMe {
-                // TODO: Save credentials to KeychainService (Phase 5 integration)
-                Logger.auth.info("Remember me enabled — keychain save deferred to Phase 5")
+                let credentials = KeychainService.Credentials(
+                    serverURL: url.absoluteString,
+                    clientID: trimmedClientID,
+                    clientSecret: trimmedClientSecret
+                )
+                try? KeychainService().save(credentials)
+            } else {
+                KeychainService().delete()
             }
 
             isLoading = false
@@ -59,9 +65,12 @@ final class LoginViewModel {
     }
 
     func loadSavedCredentials() {
-        // TODO: Load credentials from KeychainService (Phase 5 integration)
-        // If found, populate serverURL, clientID, clientSecret and set rememberMe = true
-        Logger.auth.info("Keychain credential loading deferred to Phase 5")
+        guard let credentials = KeychainService().load() else { return }
+        serverURL = credentials.serverURL
+        clientID = credentials.clientID
+        clientSecret = credentials.clientSecret
+        rememberMe = true
+        Logger.auth.info("Credentials loaded from Keychain")
     }
 
     func normalizedServerURL() -> URL? {

@@ -12,6 +12,7 @@ final class AppViewModel {
     var selectedDeviceType: DeviceType = .macOS
     var columnMapping: [Int: UpdatableField] = [:]
     var updateOperations: [UpdateOperation] = []
+    var updateResults: [UpdateResult] = []
 
     func navigateTo(_ screen: AppScreen) {
         currentScreen = screen
@@ -23,6 +24,7 @@ final class AppViewModel {
         csvData = nil
         columnMapping = [:]
         updateOperations = []
+        updateResults = []
         currentScreen = .login
     }
 
@@ -30,6 +32,7 @@ final class AppViewModel {
         csvData = nil
         columnMapping = [:]
         updateOperations = []
+        updateResults = []
         currentScreen = .csvImport
     }
 }
