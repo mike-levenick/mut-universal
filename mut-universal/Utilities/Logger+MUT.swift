@@ -1,11 +1,9 @@
 import OSLog
 
 extension Logger {
-    private static let subsystem = "com.mlev.mut-universal"
-
-    static let auth = Logger(subsystem: subsystem, category: "auth")
-    static let api = Logger(subsystem: subsystem, category: "api")
-    static let csv = Logger(subsystem: subsystem, category: "csv")
-    static let updates = Logger(subsystem: subsystem, category: "updates")
-    static let keychain = Logger(subsystem: subsystem, category: "keychain")
+    static let auth = MUTLogger(category: .auth)
+    static let api = MUTLogger(category: .api)
+    static let csv = MUTLogger(category: .csv)
+    static let updates = MUTLogger(category: .updates)
+    static let keychain = MUTLogger(category: .keychain)
 }
