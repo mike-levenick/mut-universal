@@ -1,6 +1,6 @@
-Serial,Asset Tag,Barcode 1,Barcode 2,Username,Full Name,Email Address,Building (ID),Department (ID),Position,Phone Number,PO Number,Vendor,Purchase Price,Device Name
-SERIAL001,iPad-001,BC1-001,BC2-001,jsmith,John Smith,jsmith@example.com,5,12,IT Manager,555-0101,PO-2024-100,Apple Inc,999.00,iPad-JSmith
-SERIAL002,iPad-002,BC1-002,BC2-002,jdoe,Jane Doe,jdoe@example.com,7,15,Developer,555-0102,PO-2024-101,Apple Inc,1099.00,iPad-JDoe
-SERIAL003,iPad-003,BC1-003,BC2-003,mbrown,Mike Brown,mbrown@example.com,5,8,Designer,555-0103,PO-2024-102,Apple Inc,1299.00,iPad-MBrown
-SERIAL004,iPad-004,BC1-004,BC2-004,awhite,Alice White,awhite@example.com,3,12,Sysadmin,555-0104,PO-2024-103,Apple Inc,799.00,iPad-AWhite
-SERIAL005,iPad-005,BC1-005,BC2-005,rjones,Robert Jones,rjones@example.com,7,22,VP Engineering,555-0105,PO-2024-104,Apple Inc,1599.00,iPad-RJones
+Serial,Asset Tag,Username,Full Name,Email Address,Building (ID),Department (ID),Position,Phone Number,PO Number,Vendor,Purchase Price,Device Name
+SERIAL001,iPad-001,jsmith,John Smith,jsmith@example.com,5,12,IT Manager,555-0101,PO-2024-100,Apple Inc,999.00,iPad-JSmith
+SERIAL002,iPad-002,jdoe,Jane Doe,jdoe@example.com,7,15,Developer,555-0102,PO-2024-101,Apple Inc,1099.00,iPad-JDoe
+SERIAL003,iPad-003,mbrown,Mike Brown,mbrown@example.com,5,8,Designer,555-0103,PO-2024-102,Apple Inc,1299.00,iPad-MBrown
+SERIAL004,iPad-004,awhite,Alice White,awhite@example.com,3,12,Sysadmin,555-0104,PO-2024-103,Apple Inc,799.00,iPad-AWhite
+SERIAL005,iPad-005,rjones,Robert Jones,rjones@example.com,7,22,VP Engineering,555-0105,PO-2024-104,Apple Inc,1599.00,iPad-RJones
