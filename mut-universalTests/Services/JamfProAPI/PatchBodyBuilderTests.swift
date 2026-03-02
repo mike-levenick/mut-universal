@@ -82,6 +82,20 @@ struct PatchBodyBuilderTests {
         #expect(body["deviceName"] == nil)
     }
 
+    @Test("Computer body with device name only produces minimal body")
+    func computerBodyDeviceNameOnly() {
+        let fields: [UpdateOperation.FieldUpdate] = [
+            .init(field: .deviceName, value: "My Mac"),
+        ]
+
+        let body = service.buildComputerPatchBody(fields: fields)
+
+        #expect(body.count == 1)
+        let general = body["general"] as? [String: Any]
+        #expect(general?.count == 1)
+        #expect(general?["name"] as? String == "My Mac")
+    }
+
     // MARK: - Mobile device body (v2)
 
     @Test("Mobile body puts asset tag at top level")

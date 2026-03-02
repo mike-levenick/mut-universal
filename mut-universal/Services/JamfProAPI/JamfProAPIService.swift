@@ -177,7 +177,7 @@ nonisolated final class JamfProAPIService: JamfProAPIClientProtocol, Sendable {
     /// - "location" instead of "userAndLocation", with different key names
     /// - assetTag at top level instead of under "general" (barcodes not supported on mobile v2)
     /// - purchasing nested under "ios.purchasing"
-    /// - device name as top-level "name" + "enforceName" (overrides computer's general.name)
+    /// - device name as top-level "name" + "enforceName"
     func buildMobileDevicePatchBody(fields: [UpdateOperation.FieldUpdate]) -> [String: Any] {
         var body: [String: Any] = [:]
         var location: [String: Any] = [:]
