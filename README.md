@@ -47,8 +47,8 @@ C02X67890,ASSET-002,jdoe,7
 | CSV Header | Category | Applies To | Notes |
 |---|---|---|---|
 | `Asset Tag` | General | macOS, iOS | |
-| `Barcode 1` | General | macOS, iOS | |
-| `Barcode 2` | General | macOS, iOS | |
+| `Barcode 1` | General | macOS only | |
+| `Barcode 2` | General | macOS only | |
 | `Username` | User & Location | macOS, iOS | |
 | `Full Name` | User & Location | macOS, iOS | |
 | `Email Address` | User & Location | macOS, iOS | |
@@ -59,7 +59,7 @@ C02X67890,ASSET-002,jdoe,7
 | `PO Number` | Purchasing | macOS, iOS | |
 | `Vendor` | Purchasing | macOS, iOS | |
 | `Purchase Price` | Purchasing | macOS, iOS | |
-| `Device Name` | MDM Command | iOS only | Sends an MDM command to rename the device |
+| `Device Name` | Inventory | iOS only | Sets device name via Jamf Pro API |
 
 Use the exact header names shown above — MUT auto-maps columns based on these names.
 

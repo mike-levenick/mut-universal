@@ -104,7 +104,7 @@ mut-universalUITests/       # UI tests (XCTest)
 | Mobile device static groups | Jamf Pro API | `PATCH /api/v1/mobile-device-groups/static-groups/{id}` |
 | Computer static groups (membership) | Classic API | `PUT /JSSResource/computergroups/id/{id}` |
 | User record updates | Classic API | `PUT /JSSResource/users/id/{id}` |
-| iOS device name enforcement (MDM) | Classic API | `POST /JSSResource/mobiledevicecommands/command/DeviceName/{name}/id/{id}` |
+| iOS device name (set + enforce) | Jamf Pro API | `PATCH /api/v2/mobile-devices/{id}` (top-level `name` + `enforceName`) |
 
 #### MVP Scope (Jamf Pro API only)
 

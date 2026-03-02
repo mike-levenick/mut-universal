@@ -172,13 +172,13 @@ Quick reference for the API endpoints MUT uses. Sourced from the Jamf Pro API do
 
 ---
 
-## iOS Device Name (MDM Command)
+## iOS Device Name (MDM Command) — not used by MUT
 
 **Endpoint:** `POST /JSSResource/mobiledevicecommands/command/DeviceName/{name}/id/{id}`
 **API:** Classic API
 **Purpose:** Send MDM command to rename an iOS device
 
-Note: The v2 mobile device PATCH endpoint also supports setting the name via the top-level `name` field with `enforceName: true`. The Classic API MDM command approach forces the name change immediately via MDM push.
+MUT sets device names via the v2 mobile device PATCH endpoint (`name` + `enforceName: true`). This Classic API endpoint is documented here for reference only.
 
 ---
 
