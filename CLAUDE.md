@@ -70,9 +70,11 @@ mut-universalUITests/       # UI tests (XCTest)
 ### Jamf Pro API Notes
 
 - **API docs:** https://developer.jamf.com/jamf-pro/docs/jamf-pro-api-overview
-- **Primary API:** Jamf Pro API (v1/v2) at `/api/v1/...`, `/api/v2/...` — use this for everything possible
+- **Primary API:** Jamf Pro API (v1/v2/v3) — use this for everything possible
 - **Classic API fallback:** Only use the Classic API (`/JSSResource/...`) for operations not yet available in the Jamf Pro API (see table below)
 - Both APIs use the same Bearer token, so a single auth flow covers both
+- **Full API schema reference:** See `.claude/api-reference.md` for request body schemas and field mappings
+- **IMPORTANT:** Computer and mobile device endpoints have **different JSON structures** for the same logical fields — see differences table in api-reference.md
 
 #### Authentication
 
@@ -95,7 +97,7 @@ mut-universalUITests/       # UI tests (XCTest)
 
 | Operation | API | Endpoint |
 |---|---|---|
-| Update macOS computer inventory | Jamf Pro API | `PATCH /api/v1/computers-inventory-detail/{id}` |
+| Update macOS computer inventory | Jamf Pro API | `PATCH /api/v3/computers-inventory-detail/{id}` |
 | Update iOS device inventory | Jamf Pro API | `PATCH /api/v2/mobile-devices/{id}` |
 | Look up computer by serial | Jamf Pro API | `GET /api/v1/computers-inventory?section=GENERAL&filter=hardware.serialNumber=={serial}` |
 | PreStage enrollment scope | Jamf Pro API | `POST /api/v2/{computer,mobile-device}-prestages/{id}/scope` |

@@ -33,14 +33,35 @@ MUT (Mass Update Tool) lets Jamf admins skip the tedious work of updating record
 CSV files should follow this structure:
 
 ```csv
-Serial Number,Asset Tag,Building
-C02X12345,ASSET-001,Main Office
-C02X67890,ASSET-002,Remote
+Serial Number,Asset Tag,Username,Building (ID)
+C02X12345,ASSET-001,jsmith,5
+C02X67890,ASSET-002,jdoe,7
 ```
 
-- First row: header (column names)
-- First column: identifier (serial number, asset tag, username, etc.)
-- Remaining columns: values to update
+- First row: header (column names matching the table below)
+- First column: device identifier (serial number)
+- Remaining columns: one or more fields to update (in any order)
+
+#### Supported Fields
+
+| CSV Header | Category | Applies To | Notes |
+|---|---|---|---|
+| `Asset Tag` | General | macOS, iOS | |
+| `Barcode 1` | General | macOS, iOS | |
+| `Barcode 2` | General | macOS, iOS | |
+| `Username` | User & Location | macOS, iOS | |
+| `Full Name` | User & Location | macOS, iOS | |
+| `Email Address` | User & Location | macOS, iOS | |
+| `Building (ID)` | User & Location | macOS, iOS | Jamf Pro building ID (numeric) |
+| `Department (ID)` | User & Location | macOS, iOS | Jamf Pro department ID (numeric) |
+| `Position` | User & Location | macOS, iOS | |
+| `Phone Number` | User & Location | macOS, iOS | |
+| `PO Number` | Purchasing | macOS, iOS | |
+| `Vendor` | Purchasing | macOS, iOS | |
+| `Purchase Price` | Purchasing | macOS, iOS | |
+| `Device Name` | MDM Command | iOS only | Sends an MDM command to rename the device |
+
+Use the exact header names shown above — MUT auto-maps columns based on these names.
 
 ## Building from Source
 
