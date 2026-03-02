@@ -81,7 +81,7 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
         case .macOS:
             allCases.filter { $0 != .deviceName }
         case .iOS:
-            allCases
+            allCases.filter { $0 != .barcode1 && $0 != .barcode2 }
         }
     }
 }
