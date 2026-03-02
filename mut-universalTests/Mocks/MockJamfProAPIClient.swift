@@ -13,7 +13,6 @@ final class MockJamfProAPIClient: JamfProAPIClientProtocol, @unchecked Sendable 
 
     var updateComputerResult: Result<Void, Error> = .success(())
     var updateMobileDeviceResult: Result<Void, Error> = .success(())
-    var setMobileDeviceNameResult: Result<Void, Error> = .success(())
     var invalidateTokenResult: Result<Void, Error> = .success(())
 
     // MARK: - Recorded Calls
@@ -23,17 +22,11 @@ final class MockJamfProAPIClient: JamfProAPIClientProtocol, @unchecked Sendable 
         let fields: [UpdateOperation.FieldUpdate]
     }
 
-    struct DeviceNameCall: Sendable {
-        let id: String
-        let name: String
-    }
-
     private(set) var authenticateCalls: [(serverURL: URL, clientID: String, clientSecret: String)] = []
     private(set) var lookupComputerCalls: [String] = []
     private(set) var lookupMobileDeviceCalls: [String] = []
     private(set) var updateComputerCalls: [UpdateCall] = []
     private(set) var updateMobileDeviceCalls: [UpdateCall] = []
-    private(set) var setMobileDeviceNameCalls: [DeviceNameCall] = []
     private(set) var invalidateTokenCallCount = 0
 
     // MARK: - JamfProAPIClientProtocol
@@ -77,11 +70,6 @@ final class MockJamfProAPIClient: JamfProAPIClientProtocol, @unchecked Sendable 
     ) async throws {
         updateMobileDeviceCalls.append(UpdateCall(id: id, fields: fields))
         try updateMobileDeviceResult.get()
-    }
-
-    func setMobileDeviceName(id: String, name: String) async throws {
-        setMobileDeviceNameCalls.append(DeviceNameCall(id: id, name: name))
-        try setMobileDeviceNameResult.get()
     }
 
     func invalidateToken() async throws {

@@ -54,7 +54,8 @@ struct UpdateEngineTests {
         }
     }
 
-    @Test func separatesDeviceNameForClassicAPI() async {
+    @Test("Passes all fields including device name to mobile device update")
+    func passesDeviceNameToMobileUpdate() async {
         let mock = MockJamfProAPIClient()
         mock.lookupMobileDeviceResults = ["SERIAL1": "1"]
         let engine = UpdateEngine(apiClient: mock)
@@ -79,15 +80,12 @@ struct UpdateEngineTests {
             Issue.record("Expected success status")
         }
 
-        // Verify the device name MDM command was called separately
-        #expect(mock.setMobileDeviceNameCalls.count == 1)
-        #expect(mock.setMobileDeviceNameCalls[0].name == "My iPad")
-
-        // Verify inventory update excluded deviceName
+        // Device name is included in the mobile device update (handled by body builder)
         #expect(mock.updateMobileDeviceCalls.count == 1)
         let updatedFields = mock.updateMobileDeviceCalls[0].fields
-        #expect(updatedFields.count == 1)
-        #expect(updatedFields[0].field == .assetTag)
+        #expect(updatedFields.count == 2)
+        #expect(updatedFields.contains { $0.field == .assetTag })
+        #expect(updatedFields.contains { $0.field == .deviceName })
     }
 
     @Test func reportsProgress() async {
