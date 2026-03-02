@@ -1,0 +1,6 @@
+Serial,Asset Tag,Barcode 1,Barcode 2,Username,Full Name,Email Address,Building (ID),Department (ID),Position,Phone Number,PO Number,Vendor,Purchase Price
+SERIAL001,AT-1001,BC1-001,BC2-001,jsmith,John Smith,jsmith@example.com,5,12,IT Manager,555-0101,PO-2024-001,Apple Inc,1299.00
+SERIAL002,AT-1002,BC1-002,BC2-002,jdoe,Jane Doe,jdoe@example.com,7,15,Developer,555-0102,PO-2024-002,Apple Inc,2499.00
+SERIAL003,AT-1003,BC1-003,BC2-003,mbrown,Mike Brown,mbrown@example.com,5,8,Designer,555-0103,PO-2024-003,Apple Inc,1999.00
+SERIAL004,AT-1004,BC1-004,BC2-004,awhite,Alice White,awhite@example.com,3,12,Sysadmin,555-0104,PO-2024-004,Apple Inc,1599.00
+SERIAL005,AT-1005,BC1-005,BC2-005,rjones,Robert Jones,rjones@example.com,7,22,VP Engineering,555-0105,PO-2024-005,Apple Inc,3499.00

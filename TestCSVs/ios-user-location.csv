@@ -1,0 +1,6 @@
+Serial,Username,Full Name,Email Address,Building (ID),Department (ID),Position,Phone Number
+SERIAL001,tgarcia,Tina Garcia,tgarcia@example.com,2,5,Analyst,555-0201
+SERIAL002,klee,Kevin Lee,klee@example.com,2,18,QA Lead,555-0202
+SERIAL003,npatel,Neha Patel,npatel@example.com,6,5,Data Scientist,555-0203
+SERIAL004,cmorris,Chris Morris,cmorris@example.com,1,9,Recruiter,555-0204
+SERIAL005,lwilson,Laura Wilson,lwilson@example.com,6,18,Product Manager,555-0205

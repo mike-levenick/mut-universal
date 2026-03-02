@@ -1,0 +1,6 @@
+Serial,Username,Full Name,Email Address,Building (ID),Department (ID),Position,Phone Number
+SERIAL001,jsmith,John Smith,jsmith@example.com,5,12,IT Manager,555-0101
+SERIAL002,jdoe,Jane Doe,jdoe@example.com,7,15,Developer,555-0102
+SERIAL003,mbrown,Mike Brown,mbrown@example.com,5,8,Designer,555-0103
+SERIAL004,awhite,Alice White,awhite@example.com,3,12,Sysadmin,555-0104
+SERIAL005,rjones,Robert Jones,rjones@example.com,7,22,VP Engineering,555-0105
