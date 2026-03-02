@@ -58,20 +58,11 @@ actor UpdateEngine {
                 deviceID = try await apiClient.lookupMobileDevice(bySerial: operation.identifier)
             }
 
-            let standardFields = operation.fieldUpdates.filter { !$0.field.requiresClassicAPI }
-            let deviceNameField = operation.fieldUpdates.first { $0.field == .deviceName }
-
-            if !standardFields.isEmpty {
-                switch deviceType {
-                case .macOS:
-                    try await apiClient.updateComputerInventory(id: deviceID, fields: standardFields)
-                case .iOS:
-                    try await apiClient.updateMobileDeviceInventory(id: deviceID, fields: standardFields)
-                }
-            }
-
-            if let nameField = deviceNameField {
-                try await apiClient.setMobileDeviceName(id: deviceID, name: nameField.value)
+            switch deviceType {
+            case .macOS:
+                try await apiClient.updateComputerInventory(id: deviceID, fields: operation.fieldUpdates)
+            case .iOS:
+                try await apiClient.updateMobileDeviceInventory(id: deviceID, fields: operation.fieldUpdates)
             }
 
             return UpdateResult(

@@ -28,12 +28,6 @@ protocol JamfProAPIClientProtocol: Sendable {
         fields: [UpdateOperation.FieldUpdate]
     ) async throws
 
-    /// Send a DeviceName MDM command to an iOS device (Classic API).
-    func setMobileDeviceName(
-        id: String,
-        name: String
-    ) async throws
-
     /// Invalidate the current bearer token.
     func invalidateToken() async throws
 }

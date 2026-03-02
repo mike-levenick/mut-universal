@@ -82,11 +82,11 @@ nonisolated final class JamfProAPIService: JamfProAPIClientProtocol, Sendable {
         id: String,
         fields: [UpdateOperation.FieldUpdate]
     ) async throws {
-        let path = "api/v1/computers-inventory-detail/\(id)"
+        let path = "api/v3/computers-inventory-detail/\(id)"
         var request = try await authenticatedRequest(for: path, method: "PATCH")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let body = buildInventoryPatchBody(fields: fields)
+        let body = buildComputerPatchBody(fields: fields)
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         Logger.api.info("Updating computer \(id) with \(fields.count) field(s)")
@@ -101,23 +101,14 @@ nonisolated final class JamfProAPIService: JamfProAPIClientProtocol, Sendable {
         var request = try await authenticatedRequest(for: path, method: "PATCH")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let body = buildInventoryPatchBody(fields: fields)
+        let body = buildMobileDevicePatchBody(fields: fields)
+        guard !body.isEmpty else {
+            Logger.api.info("No updatable fields for mobile device \(id), skipping PATCH")
+            return
+        }
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         Logger.api.info("Updating mobile device \(id) with \(fields.count) field(s)")
-        _ = try await execute(request)
-    }
-
-    func setMobileDeviceName(id: String, name: String) async throws {
-        guard let encodedName = name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
-            throw MUTError.updateFailed(identifier: id, reason: "Invalid device name")
-        }
-
-        let path = "JSSResource/mobiledevicecommands/command/DeviceName/\(encodedName)/id/\(id)"
-        var request = try await authenticatedRequest(for: path, method: "POST")
-        request.setValue("text/xml", forHTTPHeaderField: "Content-Type")
-
-        Logger.api.info("Setting device name for mobile device \(id)")
         _ = try await execute(request)
     }
 
@@ -159,7 +150,9 @@ nonisolated final class JamfProAPIService: JamfProAPIClientProtocol, Sendable {
         return request
     }
 
-    private func buildInventoryPatchBody(fields: [UpdateOperation.FieldUpdate]) -> [String: Any] {
+    /// Build JSON body for PATCH /api/v3/computers-inventory-detail/{id}.
+    /// Groups fields into sections using UpdatableField's apiSection/apiKey.
+    func buildComputerPatchBody(fields: [UpdateOperation.FieldUpdate]) -> [String: Any] {
         var sections: [String: [String: Any]] = [:]
 
         for field in fields {
@@ -173,6 +166,66 @@ nonisolated final class JamfProAPIService: JamfProAPIClientProtocol, Sendable {
         }
 
         return sections
+    }
+
+    /// Build JSON body for PATCH /api/v2/mobile-devices/{id}.
+    /// The mobile device endpoint has a different structure than computers:
+    /// - "location" instead of "userAndLocation", with different key names
+    /// - assetTag at top level instead of under "general" (barcodes not supported on mobile v2)
+    /// - purchasing nested under "ios.purchasing"
+    /// - device name as top-level "name" + "enforceName"
+    func buildMobileDevicePatchBody(fields: [UpdateOperation.FieldUpdate]) -> [String: Any] {
+        var body: [String: Any] = [:]
+        var location: [String: Any] = [:]
+        var purchasing: [String: Any] = [:]
+
+        // Mobile device key mappings differ from computer
+        let mobileLocationKeys: [UpdatableField: String] = [
+            .username: "username",
+            .fullName: "realName",
+            .emailAddress: "emailAddress",
+            .position: "position",
+            .phoneNumber: "phoneNumber",
+            .building: "buildingId",
+            .department: "departmentId",
+        ]
+
+        for field in fields {
+            switch field.field {
+            case .deviceName:
+                body["name"] = field.value
+                body["enforceName"] = true
+
+            case .assetTag:
+                body["assetTag"] = field.value
+
+            case .barcode1, .barcode2:
+                // Mobile device v2 endpoint does not support barcodes
+                // Skip silently — these are computer-only fields
+                continue
+
+            case .poNumber:
+                purchasing["poNumber"] = field.value
+            case .vendor:
+                purchasing["vendor"] = field.value
+            case .purchasePrice:
+                purchasing["purchasePrice"] = field.value
+
+            default:
+                if let key = mobileLocationKeys[field.field] {
+                    location[key] = field.value
+                }
+            }
+        }
+
+        if !location.isEmpty {
+            body["location"] = location
+        }
+        if !purchasing.isEmpty {
+            body["ios"] = ["purchasing": purchasing]
+        }
+
+        return body
     }
 
     private func execute(_ request: URLRequest) async throws -> Data {

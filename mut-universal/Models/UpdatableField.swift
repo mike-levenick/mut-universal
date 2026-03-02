@@ -16,7 +16,7 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
     case poNumber
     case vendor
     case purchasePrice
-    case deviceName // iOS only — triggers MDM command via Classic API
+    case deviceName // iOS only — sets name + enforceName via v2 endpoint
 
     var id: String { rawValue }
 
@@ -39,7 +39,8 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
         }
     }
 
-    /// The section in the PATCH JSON body (e.g., "general", "userAndLocation", "purchasing").
+    /// The section in the computer PATCH JSON body (e.g., "general", "userAndLocation", "purchasing").
+    /// For mobile devices, the body builder in JamfProAPIService translates to the v2 schema.
     var apiSection: String {
         switch self {
         case .assetTag, .barcode1, .barcode2:
@@ -49,11 +50,12 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
         case .poNumber, .vendor, .purchasePrice:
             "purchasing"
         case .deviceName:
-            "" // Handled via Classic API MDM command
+            "" // Handled specially by mobile device body builder
         }
     }
 
-    /// The JSON key within the section.
+    /// The JSON key within the section (computer v3 endpoint).
+    /// For mobile devices, the body builder in JamfProAPIService translates to different keys.
     var apiKey: String {
         switch self {
         case .assetTag: "assetTag"
@@ -69,13 +71,8 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
         case .poNumber: "poNumber"
         case .vendor: "vendor"
         case .purchasePrice: "purchasePrice"
-        case .deviceName: "" // Not used — Classic API
+        case .deviceName: "" // Handled specially by mobile device body builder
         }
-    }
-
-    /// Whether this field requires the Classic API instead of the Jamf Pro API.
-    var requiresClassicAPI: Bool {
-        self == .deviceName
     }
 
     /// Fields available for a given device type.
@@ -84,7 +81,7 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
         case .macOS:
             allCases.filter { $0 != .deviceName }
         case .iOS:
-            allCases
+            allCases.filter { $0 != .barcode1 && $0 != .barcode2 }
         }
     }
 }
