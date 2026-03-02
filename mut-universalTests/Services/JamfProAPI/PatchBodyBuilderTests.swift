@@ -64,8 +64,8 @@ struct PatchBodyBuilderTests {
         #expect(general?["barcode2"] as? String == "BC2")
     }
 
-    @Test("Computer body skips device name field")
-    func computerBodySkipsDeviceName() {
+    @Test("Computer body puts device name under general")
+    func computerBodyDeviceName() {
         let fields: [UpdateOperation.FieldUpdate] = [
             .init(field: .deviceName, value: "My Mac"),
             .init(field: .assetTag, value: "ASSET-001"),
@@ -73,14 +73,13 @@ struct PatchBodyBuilderTests {
 
         let body = service.buildComputerPatchBody(fields: fields)
 
-        // deviceName has empty apiSection, should be skipped
+        let general = body["general"] as? [String: Any]
+        #expect(general?["name"] as? String == "My Mac")
+        #expect(general?["assetTag"] as? String == "ASSET-001")
+
+        // Should not leak to top level
         #expect(body["name"] == nil)
         #expect(body["deviceName"] == nil)
-
-        let general = body["general"] as? [String: Any]
-        #expect(general?["assetTag"] as? String == "ASSET-001")
-        #expect(general?["name"] == nil)
-        #expect(general?["deviceName"] == nil)
     }
 
     // MARK: - Mobile device body (v2)
