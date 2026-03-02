@@ -79,6 +79,8 @@ struct PatchBodyBuilderTests {
 
         let general = body["general"] as? [String: Any]
         #expect(general?["assetTag"] as? String == "ASSET-001")
+        #expect(general?["name"] == nil)
+        #expect(general?["deviceName"] == nil)
     }
 
     // MARK: - Mobile device body (v2)

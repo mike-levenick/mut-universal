@@ -102,6 +102,10 @@ nonisolated final class JamfProAPIService: JamfProAPIClientProtocol, Sendable {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let body = buildMobileDevicePatchBody(fields: fields)
+        guard !body.isEmpty else {
+            Logger.api.info("No updatable fields for mobile device \(id), skipping PATCH")
+            return
+        }
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         Logger.api.info("Updating mobile device \(id) with \(fields.count) field(s)")
@@ -167,7 +171,7 @@ nonisolated final class JamfProAPIService: JamfProAPIClientProtocol, Sendable {
     /// Build JSON body for PATCH /api/v2/mobile-devices/{id}.
     /// The mobile device endpoint has a different structure than computers:
     /// - "location" instead of "userAndLocation", with different key names
-    /// - assetTag/barcode at top level instead of under "general"
+    /// - assetTag at top level instead of under "general" (barcodes not supported on mobile v2)
     /// - purchasing nested under "ios.purchasing"
     /// - device name as top-level "name" + "enforceName"
     func buildMobileDevicePatchBody(fields: [UpdateOperation.FieldUpdate]) -> [String: Any] {
