@@ -16,7 +16,7 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
     case poNumber
     case vendor
     case purchasePrice
-    case deviceName // iOS only — sets name + enforceName via v2 endpoint
+    case deviceName // macOS: general.name; iOS: top-level name + enforceName
 
     var id: String { rawValue }
 
@@ -50,7 +50,7 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
         case .poNumber, .vendor, .purchasePrice:
             "purchasing"
         case .deviceName:
-            "" // Handled specially by mobile device body builder
+            "general"
         }
     }
 
@@ -71,7 +71,7 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
         case .poNumber: "poNumber"
         case .vendor: "vendor"
         case .purchasePrice: "purchasePrice"
-        case .deviceName: "" // Handled specially by mobile device body builder
+        case .deviceName: "name"
         }
     }
 
@@ -79,7 +79,7 @@ enum UpdatableField: String, CaseIterable, Identifiable, Sendable {
     static func fields(for deviceType: DeviceType) -> [UpdatableField] {
         switch deviceType {
         case .macOS:
-            allCases.filter { $0 != .deviceName }
+            Array(allCases)
         case .iOS:
             allCases.filter { $0 != .barcode1 && $0 != .barcode2 }
         }

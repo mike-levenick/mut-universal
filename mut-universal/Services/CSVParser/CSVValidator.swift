@@ -32,15 +32,6 @@ nonisolated struct CSVValidator: Sendable {
         var warnings: [Warning] = []
         var errors: [ValidationError] = []
 
-        // Warn if deviceName is mapped for macOS
-        for (column, field) in columnMapping where field == .deviceName && deviceType == .macOS {
-            warnings.append(Warning(
-                id: UUID(),
-                row: 0,
-                message: "Column \(column) is mapped to Device Name, which is only supported for iOS devices."
-            ))
-        }
-
         for (rowIndex, row) in csv.rows.enumerated() {
             let rowNumber = rowIndex + 2 // 1-indexed, header is row 1
 

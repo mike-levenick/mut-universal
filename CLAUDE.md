@@ -108,8 +108,7 @@ mut-universalUITests/       # UI tests (XCTest)
 
 #### MVP Scope (Jamf Pro API only)
 
-- Update inventory fields (asset tag, username, full name, building, department, purchasing info) on macOS and iOS devices
-- Enforce device name on iOS devices (requires Classic API fallback for MDM command)
+- Update inventory fields (asset tag, username, full name, building, department, purchasing info, device name) on macOS and iOS devices
 
 #### Rate Limiting
 

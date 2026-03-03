@@ -78,7 +78,7 @@ struct CSVValidatorTests {
         #expect(fields.contains(.username))
     }
 
-    @Test func deviceNameWarningForMacOS() {
+    @Test func deviceNameAcceptedForMacOS() {
         let csv = CSVData(
             headers: ["Serial", "Device Name"],
             rows: [
@@ -91,6 +91,6 @@ struct CSVValidatorTests {
 
         #expect(result.isValid)
         let deviceNameWarnings = result.warnings.filter { $0.message.contains("Device Name") }
-        #expect(!deviceNameWarnings.isEmpty)
+        #expect(deviceNameWarnings.isEmpty)
     }
 }

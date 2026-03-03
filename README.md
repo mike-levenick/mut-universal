@@ -59,7 +59,7 @@ C02X67890,ASSET-002,jdoe,7
 | `PO Number` | Purchasing | macOS, iOS | |
 | `Vendor` | Purchasing | macOS, iOS | |
 | `Purchase Price` | Purchasing | macOS, iOS | |
-| `Device Name` | Inventory | iOS only | Sets device name via Jamf Pro API |
+| `Device Name` | General | macOS, iOS | Sets device name via Jamf Pro API |
 
 Use the exact header names shown above — MUT auto-maps columns based on these names.
 
